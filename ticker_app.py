@@ -2,8 +2,10 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from moviepy.editor import VideoClip
 
-def ticker(text, duration=3, width=100, height=100):
+def make_ticker(text, duration=3, width=100, height=100):
+    """Создаёт видео с бегущей строкой"""
     def make_frame(t):
+        """Создаёт один кадр"""
         img = Image.new("RGB", (width, height), color=(0, 0, 0))
         draw = ImageDraw.Draw(img)
 
@@ -14,7 +16,7 @@ def ticker(text, duration=3, width=100, height=100):
         except IOError:
             font = ImageFont.load_default()
 
-        # Считаем позицию
+        # Рассчитываем положение текста
         text_width, text_height = draw.textsize(text, font=font)
         x = width - (width + text_width) * t / duration
         y = (height - text_height) // 2
@@ -35,4 +37,4 @@ def ticker(text, duration=3, width=100, height=100):
 
 if __name__ == "__main__":
     user_text = input("Введите ваш текст: ")
-    ticker(user_text)
+    make_ticker(user_text)
